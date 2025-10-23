@@ -5,10 +5,10 @@ import com.commun.evenement.GestionnaireEvenement;
 import com.commun.net.Connexion;
 
 /**
- * Cette classe repr�sente un gestionnaire d'�v�nement d'un serveur. Lorsqu'un serveur re�oit un texte d'un client,
- * il cr�e un �v�nement � partir du texte re�u et alerte ce gestionnaire qui r�agit en g�rant l'�v�nement.
+ * Cette classe représente un gestionnaire d’événement d’un serveur. Lorsqu’un serveur reçoit un texte d’un client,
+ * il crée un événement à partir du texte reçu et alerte ce gestionnaire qui réagit en gérant l’événement.
  *
- * @author Abdelmoum�ne Toudeft (Abdelmoumene.Toudeft@etsmtl.ca)
+ * @author Abdelmoumène Toudeft (Abdelmoumene.Toudeft@etsmtl.ca)
  * @version 1.0
  * @since 2023-09-01
  */
@@ -16,18 +16,18 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
     private Serveur serveur;
 
     /**
-     * Construit un gestionnaire d'�v�nements pour un serveur.
+     * Construit un gestionnaire d’événements pour un serveur.
      *
-     * @param serveur Serveur Le serveur pour lequel ce gestionnaire g�re des �v�nements
+     * @param serveur Serveur Le serveur pour lequel ce gestionnaire gère des événements
      */
     public GestionnaireEvenementServeur(Serveur serveur) {
         this.serveur = serveur;
     }
 
     /**
-     * M�thode de gestion d'�v�nements. Cette m�thode contiendra le code qui g�re les r�ponses obtenues d'un client.
+     * Méthode de gestion d’événements. Cette méthode contiendra le code qui gère les réponses obtenues d’un client.
      *
-     * @param evenement L'�v�nement � g�rer.
+     * @param evenement L’événement à gérer.
      */
     @Override
     public void traiter(Evenement evenement) {
@@ -38,23 +38,23 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
 
         if (source instanceof Connexion) {
             cnx = (Connexion) source;
-            System.out.println("SERVEUR-Recu : " + evenement.getType() + " " + evenement.getArgument());
+            System.out.println("SERVEUR-Reçu : " + evenement.getType() + " " + evenement.getArgument());
             typeEvenement = evenement.getType();
             switch (typeEvenement) {
-                case "EXIT": //Ferme la connexion avec le client qui a envoy� "EXIT":
+                case "EXIT": // Ferme la connexion avec le client qui a envoyé "EXIT" :
                     cnx.envoyer("END");
                     serveur.enlever(cnx);
                     cnx.close();
                     break;
-                case "LIST": //Envoie la liste des alias des personnes connect�es :
+                case "LIST": // Envoie la liste des alias des personnes connectées :
                     cnx.envoyer("LIST " + serveur.list());
                     break;
                 case "MSG":
-                    serveur.envoyerATousSauf(serveur.list(), cnx.getAlias());
+                    serveur.envoyerATousSauf(evenement.getArgument(), cnx.getAlias());
                     break;
-                //Ajoutez ici d�autres case pour g�rer d�autres commandes.
+                // Ajoutez ici d’autres case pour gérer d’autres commandes.
 
-                default: //Renvoyer le texte recu convertit en majuscules :
+                default: // Renvoyer le texte reçu converti en majuscules :
                     msg = (evenement.getType() + " " + evenement.getArgument()).toUpperCase();
                     cnx.envoyer(msg);
             }
