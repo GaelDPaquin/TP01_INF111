@@ -50,6 +50,7 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
                     cnx.envoyer("LIST " + serveur.list());
                     break;
                 case "MSG":
+                    serveur.ajouterHistorique(evenement.getArgument(), cnx.getAlias());
                     serveur.envoyerATousSauf(evenement.getArgument(), cnx.getAlias());
                     break;
                 // Ajoutez ici d’autres case pour gérer d’autres commandes.

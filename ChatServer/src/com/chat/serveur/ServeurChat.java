@@ -3,6 +3,9 @@ package com.chat.serveur;
 import com.commun.evenement.Evenement;
 import com.commun.net.Connexion;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
 /**
  * Cette classe étend (hérite) la classe abstraite Serveur et y ajoute le nécessaire pour que le
  * serveur soit un serveur de chat.
@@ -22,7 +25,7 @@ public class ServeurChat extends Serveur {
     public ServeurChat(int port) {
         super(port);
     }
-
+    Vector<String> historique = new Vector<>();
     @Override
     public synchronized boolean ajouter(Connexion connexion) {
         String hist = this.historique();
@@ -34,6 +37,7 @@ public class ServeurChat extends Serveur {
         }
         return super.ajouter(connexion);
     }
+
     /**
      * Valide l’arrivée d’un nouveau client sur le serveur. Cette redéfinition
      * de la méthode héritée de Serveur vérifie si le nouveau client a envoyé
@@ -89,14 +93,22 @@ public class ServeurChat extends Serveur {
     }
     /**
      * Retourne la liste des messages de l’historique de chat dans une chaîne
-     * de caractères.
+     * de caractères. ajouterHistorique()
      *
      * @return String chaîne de caractères contenant la liste des alias des membres connectés sous la
      * forme message1\nmessage2\nmessage3 ...
      */
     public String historique() {
         String s = "";
+        int nbHistorique = historique.size();
+        for (int i = 0; i < nbHistorique; i++) {
+            s = s +  historique.get(i) + "\n";
+        }
         return s;
+    }
+
+    public void ajouterHistorique(String str, String expediteur){
+        historique.add(expediteur + ">>" + str);
     }
     public void envoyerATousSauf(String str, String aliasExpediteur){
         for (Connexion cnx:connectes)
