@@ -4,6 +4,8 @@ import com.commun.evenement.Evenement;
 import com.commun.evenement.GestionnaireEvenement;
 import com.commun.net.Connexion;
 
+import java.util.ArrayList;
+
 /**
  * Cette classe représente un gestionnaire d’événement d’un serveur. Lorsqu’un serveur reçoit un texte d’un client,
  * il crée un événement à partir du texte reçu et alerte ce gestionnaire qui réagit en gérant l’événement.
@@ -29,18 +31,45 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
      *
      * @param evenement L’événement à gérer.
      */
+    ArrayList<Invitation> inviteList = new ArrayList<>();
+
     @Override
     public void traiter(Evenement evenement) {
         Object source = evenement.getSource();
         Connexion cnx;
         String msg, typeEvenement, aliasExpediteur;
         ServeurChat serveur = (ServeurChat) this.serveur;
-
         if (source instanceof Connexion) {
             cnx = (Connexion) source;
             System.out.println("SERVEUR-Reçu : " + evenement.getType() + " " + evenement.getArgument());
             typeEvenement = evenement.getType();
             switch (typeEvenement) {
+                case "JOIN":
+                    Invitation invite = new Invitation(cnx, evenement.getArgument());
+                    inviteList.add(invite);
+                    System.out.println(inviteList.getFirst().getAliasHost());
+                    System.out.println(inviteList.getFirst().getAliasGuest());
+                        for (int i = 0; i < inviteList.size(); i++) {
+                            if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
+                                System.out.println(evenement.getArgument());
+                                SalonPrive salonPrive = new SalonPrive(cnx, invite.getAliasGuest());
+                                cnx.envoyer("JOINOK "+ evenement.getArgument());
+                                break;
+                            }
+                    //Il ne reste qu'à faire que le host ne recoive pas sa propore invite
+                    //serveur.envoyerATousSauf("JOIN", cnx.getAlias());
+                    cnx.envoyer("JOIN ");
+                    cnx.envoyer((invite.getAliasHost()));
+                    }
+
+                    break;
+                case "DECLINE":
+                    for (int i = 0; i < inviteList.size(); i++) {
+                        if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
+                            cnx.envoyer("DECLINE "+ cnx.getAlias());
+                            inviteList.remove(i);
+                        }
+                    }
                 case "EXIT": // Ferme la connexion avec le client qui a envoyé "EXIT" :
                     cnx.envoyer("END");
                     serveur.enlever(cnx);

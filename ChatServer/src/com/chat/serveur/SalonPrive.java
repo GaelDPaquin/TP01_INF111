@@ -1,9 +1,15 @@
 package com.chat.serveur;
 
+import com.commun.net.Connexion;
+
 public class SalonPrive {
     String aliasHost;
     String aliasGuest;
 
+    public SalonPrive(Connexion connexion, String aliasGuest) {
+        this.aliasGuest = aliasGuest;
+        this.aliasHost = connexion.getAlias();
+    }
     public String getAliasHost() {
         return aliasHost;
     }

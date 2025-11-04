@@ -110,10 +110,11 @@ public class ServeurChat extends Serveur {
     public void ajouterHistorique(String str, String expediteur){
         historique.add(expediteur + ">>" + str);
     }
+
     public void envoyerATousSauf(String str, String aliasExpediteur){
         for (Connexion cnx:connectes)
             if(!cnx.getAlias().equals(aliasExpediteur)) {
-                cnx.envoyer(aliasExpediteur +">>"+str);
+                cnx.envoyer(aliasExpediteur +" >> "+str);
             }
     }
 }
