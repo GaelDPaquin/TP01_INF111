@@ -11,12 +11,13 @@ public final class Plateau {
     public int getNombreCasesRemplies() { return casesRemplies; }
     public boolean estPlein() { return casesRemplies == 9; }
     public boolean placer(Coup coup) {
-        Position pos = new Position()
         if (!estVide(coup.getPosition())) {
             return false;
         }
         else {
-            grille[]
+            Position pos = coup.getPosition();
+            grille[pos.getLigne()][pos.getColonne()]=coup.getSymbole();
+            return true;
         }
     }
     public List<Position> ligneGagnante() {
