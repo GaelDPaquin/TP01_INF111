@@ -17,18 +17,20 @@ public final class Plateau {
         else {
             Position pos = coup.getPosition();
             grille[pos.getLigne()][pos.getColonne()]=coup.getSymbole();
+            casesRemplies++;
             return true;
         }
     }
     public List<Position> ligneGagnante() {
+        Symbole x1, x2, x3;
         int[][][] lignes = {
             {{0,0},{0,1},{0,2}}, {{1,0},{1,1},{1,2}}, {{2,0},{2,1},{2,2}},
             {{0,0},{1,0},{2,0}}, {{0,1},{1,1},{2,1}}, {{0,2},{1,2},{2,2}},
             {{0,0},{1,1},{2,2}}, {{0,2},{1,1},{2,0}}
         };
-        throw new MethodeNonImplementeeException("***** Vous n'avez pas encore implemente la methode : "
-                +Thread.currentThread().getStackTrace()[1].getMethodName()
-                +"() de la classe "+this.getClass().getName());
+        if (x1 != null && x1==x2 && x2==x3) {
+            System.out.println("Vicoire");
+        }
     }
     private final String[][] GrilleInitiale = new String[3][3]; {
         for (int i = 0; i < 3; i++) {
