@@ -2,6 +2,8 @@ package com.atoudeft.tictactoe.classes;
 
 import com.atoudeft.tictactoe.MethodeNonImplementeeException;
 
+import java.util.List;
+
 public final class Partie {
     private final Plateau plateau = new Plateau();
     private Symbole joueurCourant;
@@ -37,9 +39,19 @@ public final class Partie {
         return true;
     }
     private void mettreAJourStatutApresCoup() {
-        throw new MethodeNonImplementeeException("***** Vous n'avez pas encore implemente la methode : "
-                +Thread.currentThread().getStackTrace()[1].getMethodName()
-                +"() de la classe "+this.getClass().getName());
+        if (!plateau.ligneGagnante().isEmpty()) {
+            List<Position> gagnant = plateau.ligneGagnante();
+            Position p = gagnant.get(0);
+            Symbole symboleGagnant = plateau.get(p.getLigne(),p.getColonne());
+            if(symboleGagnant.equals(Symbole.X)) {
+                statut = StatutPartie.X_GAGNE;
+            }
+            else {
+                statut = StatutPartie.O_GAGNE;
+            }
+        } else if (plateau.ligneGagnante().isEmpty() && plateau.estPlein()) {
+            statut = StatutPartie.NULLE;
+        }
     }
 
     @Override
