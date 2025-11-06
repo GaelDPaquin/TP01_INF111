@@ -32,6 +32,7 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
      * @param evenement L’événement à gérer.
      */
     ArrayList<Invitation> inviteList = new ArrayList<>();
+    ArrayList<SalonPrive> salonsList = new ArrayList<>();
 
     @Override
     public void traiter(Evenement evenement) {
@@ -48,9 +49,11 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
                     Invitation invite = new Invitation(cnx, evenement.getArgument());
                     inviteList.add(invite);
                     boolean roomCreated = false;
+                    //Rejoins si une invitation est envoyée au préalable
                         for (int i = 0; i < inviteList.size(); i++) {
                             if (inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
                                 SalonPrive salonPrive = new SalonPrive(cnx, invite.getAliasGuest());
+                                salonsList.add(salonPrive);
                                 for(Connexion c: serveur.connectes){
                                     if(c.getAlias().equals(evenement.getArgument())){
                                         c.envoyer("JOINOK " + cnx.getAlias());
@@ -62,6 +65,7 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
                                 break;
                             }
                         }
+                        //Envoie invitation si aucune existe
                         if(!roomCreated) {
                             for(Connexion c : serveur.connectes){
                                 if(c.getAlias().equals(evenement.getArgument())){
@@ -74,22 +78,77 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
 
                     break;
                 case "DECLINE":
+                    //Supprimer une invitation entrante
                     for(Connexion c : serveur.connectes){
                         if(c.getAlias().equals(evenement.getArgument())){
-                            c.envoyer("DECLINE " + cnx.getAlias());
                             for(int i=0; i < inviteList.size(); i++){
                                 if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())){
+                                    c.envoyer("DECLINE " + cnx.getAlias());
                                     inviteList.remove(i);
                                 }
                             }
                         }
                     }
+                    //Supprimer sa propre invitation
+                    for(int i=0; i < inviteList.size(); i++){
+                        if(inviteList.get(i).getAliasHost().equals(cnx.getAlias()) && inviteList.get(i).getAliasGuest().equals(evenement.getArgument())){
+                            inviteList.remove(i);
+                        }
+                    }
 
+                    break;
+                case "INV":
+                    ArrayList<Invitation> listePerso = new ArrayList<>();
+                    String toStr = "";
+                    for(Invitation invitation : inviteList){
+                        if(invitation.getAliasGuest().equals(cnx.getAlias())){
+                            listePerso.add(invitation);
+                        }
+                    }
+                    String temp = "";
+                    for(Invitation invitation : listePerso){
+                        temp = invitation.getAliasHost();
+                        toStr +=temp + " ";
+                    }
+
+                    cnx.envoyer("INV " + toStr + ":");
                     break;
                 case "EXIT": // Ferme la connexion avec le client qui a envoyé "EXIT" :
                     cnx.envoyer("END");
                     serveur.enlever(cnx);
                     cnx.close();
+                    break;
+                case "QUIT":
+                    for(int i =0; i < salonsList.size(); i++){
+                        if(salonsList.get(i).getAliasGuest().equals(cnx.getAlias()) || salonsList.get(i).getAliasHost().equals(cnx.getAlias())){
+                            salonsList.remove(i);
+                            for(Connexion con : serveur.connectes){
+                                if(con.getAlias().equals(evenement.getArgument()) || con.getAlias().equals(cnx.getAlias())){
+                                    con.envoyer("QUIT " + cnx.getAlias());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "PRV":
+                    for(SalonPrive s: salonsList){
+                        if(s.getAliasGuest().equals(cnx.getAlias())){
+                            for(Connexion c : serveur.connectes){
+                                if(c.getAlias().equals(s.getAliasHost())){
+                                    String[] message = evenement.getArgument().split(" ");
+                                    c.envoyer("PRV " + message[2]);
+                                }
+                            }
+                            cnx.envoyer("PRV " + evenement.getArgument());
+                        } else if(s.getAliasHost().equals(cnx.getAlias())){
+                            for(Connexion c : serveur.connectes){
+                                if(c.getAlias().equals(s.getAliasGuest())){
+                                    String[] message = evenement.getArgument().split(" ");
+                                    c.envoyer(cnx.getAlias() + ": " + message[1]);
+                                }
+                            }
+                        }
+                    }
                     break;
                 case "LIST": // Envoie la liste des alias des personnes connectées :
                     cnx.envoyer("LIST " + serveur.list());
