@@ -3,6 +3,7 @@ package com.atoudeft.tictactoe.classes;
 import com.atoudeft.tictactoe.MethodeNonImplementeeException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 public final class Plateau {
     private final Symbole[][] grille = new Symbole[3][3];
@@ -51,7 +52,7 @@ public final class Plateau {
                 return posGagnante;
             }
         }
-        return null;
+        return Collections.emptyList();
     }
     private final String[][] GrilleInitiale = new String[3][3]; {
         for (int i = 0; i < 3; i++) {
