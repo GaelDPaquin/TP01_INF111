@@ -19,6 +19,7 @@ public final class Plateau {
         else {
             Position pos = coup.getPosition();
             grille[pos.getLigne()][pos.getColonne()]=coup.getSymbole();
+            GrilleInitiale[pos.getLigne()][pos.getColonne()]= String.valueOf(coup.getSymbole());
             casesRemplies++;
             return true;
         }

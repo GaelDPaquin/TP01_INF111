@@ -28,9 +28,17 @@ public final class Partie {
     }
 
     public boolean jouer(Symbole symbole, Position position) {
-        throw new MethodeNonImplementeeException("***** Vous n'avez pas encore implemente la methode : "
-                +Thread.currentThread().getStackTrace()[1].getMethodName()
-                +"() de la classe "+this.getClass().getName());
+        Coup c = new Coup(position,symbole);
+        if (!plateau.estVide(position) || !isPartieEnCours() || !joueurCourant.equals(symbole)){
+            return false;
+        }
+        plateau.placer(c);
+        mettreAJourStatutApresCoup();
+        if (joueurCourant.equals(Symbole.X))
+            joueurCourant = Symbole.O;
+        else
+            joueurCourant = Symbole.X;
+        return true;
     }
     public boolean isPartieEnCours() {
         if (statut != StatutPartie.EN_COURS) {
@@ -41,8 +49,8 @@ public final class Partie {
     private void mettreAJourStatutApresCoup() {
         if (!plateau.ligneGagnante().isEmpty()) {
             List<Position> gagnant = plateau.ligneGagnante();
-            Position p = gagnant.get(0);
-            Symbole symboleGagnant = plateau.get(p.getLigne(),p.getColonne());
+            Position pos = gagnant.get(0);
+            Symbole symboleGagnant = plateau.get(pos.getLigne(),pos.getColonne());
             if(symboleGagnant.equals(Symbole.X)) {
                 statut = StatutPartie.X_GAGNE;
             }
