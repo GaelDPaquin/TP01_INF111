@@ -29,8 +29,15 @@ public final class Partie {
 
     public boolean jouer(Symbole symbole, Position position) {
         Coup c = new Coup(position,symbole);
+        if (!plateau.estVide(position) || !isPartieEnCours() || !joueurCourant.equals(symbole)){
+            return false;
+        }
         plateau.placer(c);
         mettreAJourStatutApresCoup();
+        if (joueurCourant.equals(Symbole.X))
+            joueurCourant = Symbole.O;
+        else
+            joueurCourant = Symbole.X;
         return true;
     }
     public boolean isPartieEnCours() {
