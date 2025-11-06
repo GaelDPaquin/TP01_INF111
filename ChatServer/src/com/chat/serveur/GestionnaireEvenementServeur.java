@@ -47,29 +47,45 @@ public class GestionnaireEvenementServeur implements GestionnaireEvenement {
                 case "JOIN":
                     Invitation invite = new Invitation(cnx, evenement.getArgument());
                     inviteList.add(invite);
-                    System.out.println(inviteList.getFirst().getAliasHost());
-                    System.out.println(inviteList.getFirst().getAliasGuest());
+                    boolean roomCreated = false;
                         for (int i = 0; i < inviteList.size(); i++) {
-                            if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
-                                System.out.println(evenement.getArgument());
+                            if (inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
                                 SalonPrive salonPrive = new SalonPrive(cnx, invite.getAliasGuest());
-                                cnx.envoyer("JOINOK "+ evenement.getArgument());
+                                for(Connexion c: serveur.connectes){
+                                    if(c.getAlias().equals(evenement.getArgument())){
+                                        c.envoyer("JOINOK " + cnx.getAlias());
+                                    }
+                                }
+                                cnx.envoyer("JOINOK " + evenement.getArgument());
+                                roomCreated = true;
+                                inviteList.remove(i);
                                 break;
                             }
-                    //Il ne reste qu'à faire que le host ne recoive pas sa propore invite
-                    //serveur.envoyerATousSauf("JOIN", cnx.getAlias());
-                    cnx.envoyer("JOIN ");
-                    cnx.envoyer((invite.getAliasHost()));
-                    }
+                        }
+                        if(!roomCreated) {
+                            for(Connexion c : serveur.connectes){
+                                if(c.getAlias().equals(evenement.getArgument())){
+                                    c.envoyer("JOIN " + cnx.getAlias());
+                                }
+                            }
+                        }
+
+
 
                     break;
                 case "DECLINE":
-                    for (int i = 0; i < inviteList.size(); i++) {
-                        if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())) {
-                            cnx.envoyer("DECLINE "+ cnx.getAlias());
-                            inviteList.remove(i);
+                    for(Connexion c : serveur.connectes){
+                        if(c.getAlias().equals(evenement.getArgument())){
+                            c.envoyer("DECLINE " + cnx.getAlias());
+                            for(int i=0; i < inviteList.size(); i++){
+                                if(inviteList.get(i).getAliasGuest().equals(cnx.getAlias())){
+                                    inviteList.remove(i);
+                                }
+                            }
                         }
                     }
+
+                    break;
                 case "EXIT": // Ferme la connexion avec le client qui a envoyé "EXIT" :
                     cnx.envoyer("END");
                     serveur.enlever(cnx);
