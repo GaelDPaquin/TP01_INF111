@@ -41,8 +41,8 @@ public final class Partie {
     private void mettreAJourStatutApresCoup() {
         if (!plateau.ligneGagnante().isEmpty()) {
             List<Position> gagnant = plateau.ligneGagnante();
-            Position p = gagnant.get(0);
-            Symbole symboleGagnant = plateau.get(p.getLigne(),p.getColonne());
+            Position pos = gagnant.get(0);
+            Symbole symboleGagnant = plateau.get(pos.getLigne(),pos.getColonne());
             if(symboleGagnant.equals(Symbole.X)) {
                 statut = StatutPartie.X_GAGNE;
             }
