@@ -45,7 +45,7 @@ public final class Partie {
     @Override
     public String toString() {
         String str = "";
-        str = plateau + "\n"
+        str = plateau +"\n"
                 +"Joueur Courant : " + joueurCourant +"\n"
                 +"Etat : " + statut + "\n";
         return str;
