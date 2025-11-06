@@ -28,9 +28,10 @@ public final class Partie {
     }
 
     public boolean jouer(Symbole symbole, Position position) {
-        throw new MethodeNonImplementeeException("***** Vous n'avez pas encore implemente la methode : "
-                +Thread.currentThread().getStackTrace()[1].getMethodName()
-                +"() de la classe "+this.getClass().getName());
+        Coup c = new Coup(position,symbole);
+        plateau.placer(c);
+        mettreAJourStatutApresCoup();
+        return true;
     }
     public boolean isPartieEnCours() {
         if (statut != StatutPartie.EN_COURS) {
