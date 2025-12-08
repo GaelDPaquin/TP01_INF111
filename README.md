@@ -1,4 +1,4 @@
-# TP01_INF111
+# TP01_INF111 & TP02_INF111
 
 ### Équipe:
 ##### - Samuel Dubuc
