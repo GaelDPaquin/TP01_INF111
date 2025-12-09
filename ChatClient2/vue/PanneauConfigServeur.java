@@ -19,18 +19,18 @@ public class PanneauConfigServeur extends JPanel {
         JPanel pTexte = new JPanel(new GridLayout(2,1,5,5));
 
         JLabel lAdresse = new JLabel("Adresse IP :");
-        JTextField tAdresse = new JTextField(20);
-        tAdresse.setText(adr);
+        txtAdrServeur = new JTextField(20);
+        txtAdrServeur.setText(adr);
 
         JLabel lPort = new JLabel("Port :");
-        JTextField tPort = new JTextField(20);
-        tPort.setText(String.valueOf(port));
+        txtNumPort = new JTextField(20);
+        txtNumPort.setText(String.valueOf(port));
         lPort.setHorizontalAlignment(SwingConstants.RIGHT);
 
         pLabel.add(lAdresse);
         pLabel.add(lPort);
-        pTexte.add(tAdresse);
-        pTexte.add(tPort);
+        pTexte.add(txtAdrServeur);
+        pTexte.add(txtNumPort);
 
         this.add(pLabel, BorderLayout.WEST);
         this.add(pTexte, BorderLayout.CENTER);
