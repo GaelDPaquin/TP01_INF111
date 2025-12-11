@@ -60,6 +60,7 @@ public class EcouteurMenuPrincipal implements ActionListener {
                                 int port = Integer.parseInt(pcs.getPortServeur());
                                 if (port < 1 || port > 65735){
                                     recommencer=true;
+                                    JOptionPane.showMessageDialog(fenetre, "Le port doit être compris entre 1 et 65735");
                                 }else{
                                     clientChat.setPortServeur(port);
                                     recommencer=false;
