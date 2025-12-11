@@ -23,5 +23,14 @@ public class EcouteurChatPublic implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         //à compléter
+        Object source = evt.getSource();
+        if(source == panneauChat.getChampDeSaisie()) {
+            if(!panneauChat.getChampDeSaisie().getText().isEmpty()){
+                System.out.println("MSG "+ panneauChat.getChampDeSaisie().getText());
+                clientChat.envoyer("MSG " + panneauChat.getChampDeSaisie().getText());
+                panneauChat.getZoneChat().append("MOI>> " + panneauChat.getChampDeSaisie().getText() + "\n");
+                panneauChat.getChampDeSaisie().setText("");
+            }
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.chat.commun.thread;
 /**
- * Cette classe permet de créer des threads capables de lire continuellement sur un un objet de type Lecteur.
+ * Cette classe permet de crï¿½er des threads capables de lire continuellement sur un un objet de type Lecteur.
  *
- * @author Abdelmoumène Toudeft (Abdelmoumene.Toudeft@etsmtl.ca)
+ * @author Abdelmoumï¿½ne Toudeft (Abdelmoumene.Toudeft@etsmtl.ca)
  * @version 1.0
  * @since 2023-09-01
  */
@@ -19,7 +19,7 @@ public class ThreadEcouteurDeTexte extends Thread {
 	 }
 
 	/**
-	 * Méthode principale du thread. Cette méthode appelle continuellement la méthode lire() du
+	 * Mï¿½thode principale du thread. Cette mï¿½thode appelle continuellement la mï¿½thode lire() du
 	 * lecteur (client ou serveur)
 	 */
 	public void run()
