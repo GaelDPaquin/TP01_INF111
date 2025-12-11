@@ -2,6 +2,7 @@ package controleur;
 
 import com.chat.client.ClientChat;
 
+import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,5 +22,13 @@ public class EcouteurListeConnectes extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent evt) {
         //à compléter
+        if(evt.getClickCount() == 2) {
+
+            JList list = (JList) evt.getSource();
+            Object selected = list.getSelectedValue();
+            String username = selected.toString();
+            clientChat.envoyer("JOIN " + username + "\n");
+
+        }
     }
 }
