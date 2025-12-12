@@ -17,7 +17,7 @@ public class PanneauChatPrive extends PanneauChat {
         bAccepterOuInviter = new JButton("Inviter TTT");
         bRefuser = new JButton("Refuser");
 
-        bAccepterOuInviter.setActionCommand("ACCEPTER");
+        bAccepterOuInviter.setActionCommand("INVITER");
         bRefuser.setActionCommand("REFUSER");
 
         bRefuser.setVisible(false);
@@ -29,6 +29,8 @@ public class PanneauChatPrive extends PanneauChat {
         this.add(panneauBoutons, BorderLayout.NORTH);
 
     }
+
+
     @Override
     public void setEcouteur(ActionListener ecouteur) {
         super.setEcouteur(ecouteur);
@@ -37,10 +39,12 @@ public class PanneauChatPrive extends PanneauChat {
     }
     public void invitationAJouerRecue() {
         bAccepterOuInviter.setText("Accepter");
+        bAccepterOuInviter.setActionCommand("ACCEPTER");
         bRefuser.setVisible(true);
     }
     public void invitationAJouerAnnulee() {
         bAccepterOuInviter.setText("Inviter TTT");
+        bAccepterOuInviter.setActionCommand("INVITER");
         bRefuser.setVisible(false);
     }
 
