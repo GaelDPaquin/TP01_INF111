@@ -118,8 +118,8 @@ public class PanneauPrincipal  extends JPanel {
     }
 
     public void ajouterMessagePrive(String alias, String msg) {
-        String message = alias+">>"+msg;
-        System.out.println("PRIVÉ : "+alias+">>"+msg);
+        String message = alias+">> "+msg;
+        System.out.println("PRIVÉ : "+alias+">> "+msg);
         PanneauChatPrive panneauPrive = panneauxPrives.get(alias);
         if (panneauPrive != null) {
             panneauPrive.ajouter(message);

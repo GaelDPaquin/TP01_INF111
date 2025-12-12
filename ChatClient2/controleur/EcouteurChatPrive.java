@@ -51,6 +51,7 @@ public class EcouteurChatPrive extends EcouteurChatPublic {
                         break;
                     default:
                         clientChat.envoyer("PRV " + alias + " " + saisie);
+                        ((PanneauChatPrive)panneauChat).ajouter("Moi >> " + saisie);
                         break;
                 }
                 panneauChat.getChampDeSaisie().setText("");
