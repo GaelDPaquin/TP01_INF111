@@ -2,6 +2,7 @@ package controleur;
 
 import com.chat.client.ClientChat;
 import vue.PanneauChat;
+import vue.PanneauChatPrive;
 
 import java.awt.event.ActionEvent;
 
@@ -24,14 +25,19 @@ public class EcouteurChatPrive extends EcouteurChatPublic {
     @Override
     public void actionPerformed(ActionEvent evenement) {
         String commande = evenement.getActionCommand();
+        Object source = evenement.getSource();
 
         switch (commande) {
+            case "INVITER":
+                clientChat.envoyer("TTT " + alias);
+                break;
             case "ACCEPTER":
                 clientChat.envoyer("TTT " + alias);
                 break;
 
             case "REFUSER":
                 clientChat.envoyer("DECLINE " + alias);
+                ((PanneauChatPrive)panneauChat).invitationAJouerAnnulee();
                 break;
 
             default:
