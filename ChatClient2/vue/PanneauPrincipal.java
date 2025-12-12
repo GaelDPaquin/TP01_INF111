@@ -37,6 +37,14 @@ public class PanneauPrincipal  extends JPanel {
 
         panneauInvitations = new PanneauInvitations();
 
+        EcouteurEvenement ecouteurInvitations;
+        ecouteurInvitations = new EcouteurEvenement(
+                clientChat,
+                panneauInvitations
+        );
+
+        panneauInvitations.setEcouteur(ecouteurInvitations);
+
 
         panneauxPrives = new HashMap<>();
 
