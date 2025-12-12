@@ -1,6 +1,7 @@
 package vue;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -19,7 +20,13 @@ public class PanneauChatPrive extends PanneauChat {
         bAccepterOuInviter.setActionCommand("ACCEPTER");
         bRefuser.setActionCommand("REFUSER");
 
-        //à compléter
+        bRefuser.setVisible(false);
+
+        JPanel panneauBoutons = new JPanel();
+        panneauBoutons.add(bAccepterOuInviter);
+        panneauBoutons.add(bRefuser);
+
+        this.add(panneauBoutons, BorderLayout.NORTH);
 
     }
     @Override
@@ -29,10 +36,12 @@ public class PanneauChatPrive extends PanneauChat {
         bRefuser.addActionListener(ecouteur);
     }
     public void invitationAJouerRecue() {
-        //à compléter
+        bAccepterOuInviter.setText("Accepter");
+        bRefuser.setVisible(true);
     }
     public void invitationAJouerAnnulee() {
-        //à compléter
+        bAccepterOuInviter.setText("Inviter TTT");
+        bRefuser.setVisible(false);
     }
 
     public void setFenetreJeu(FenetreTicTacToe fenetreTicTacToe) {
