@@ -23,6 +23,7 @@ public class EcouteurEvenement implements ActionListener {
         if (invitationsSelectionnees.isEmpty()) return;
 
         String actionBouton = evenement.getActionCommand();
+        System.out.println("Action reçue: " + actionBouton);
 
         for (String aliasInvitation : invitationsSelectionnees) {
             switch (actionBouton) {
@@ -34,6 +35,8 @@ public class EcouteurEvenement implements ActionListener {
                     clientChat.envoyer("DECLINE " + aliasInvitation);
                     panneauInvitations.retirerInvitationRecue(aliasInvitation);
                     break;
+                default:
+                    System.out.println("Action inconnue: " + actionBouton);
             }
         }
     }
