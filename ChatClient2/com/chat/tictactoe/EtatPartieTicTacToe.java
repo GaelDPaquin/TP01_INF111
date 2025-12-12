@@ -1,6 +1,9 @@
 package com.chat.tictactoe;
 
-public class EtatPartieTicTacToe {
+import observer.Observable;
+
+
+public class EtatPartieTicTacToe extends Observable {
     private char[][] etatPlateau = new char[3][3];
 
     public EtatPartieTicTacToe() {
@@ -12,8 +15,24 @@ public class EtatPartieTicTacToe {
     }
     public boolean coup(String strCoup) {
         boolean res = false;
-        //à compléter
+        String[] t = strCoup.split(" ");
+        if (t.length < 3)
+            return res;
+        if (!t[0].equalsIgnoreCase("X") || t[0].equalsIgnoreCase("O"))
+            return res;
+        try {
+            int i = Integer.parseInt(t[1]);
+            int j = Integer.parseInt(t[2]);
+            if (etatPlateau[i][j] !=' ')
+                return res;
+            etatPlateau[i][j] = t[0].charAt(0);
+            notifierObservateurs();
+            return true;
 
+        }
+        catch (Exception exc) {
+            System.out.println("Mauvaise saisie");
+        }
         return res;
     }
 

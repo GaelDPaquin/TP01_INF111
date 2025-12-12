@@ -3,12 +3,13 @@ package vue;
 import com.chat.tictactoe.EtatPartieTicTacToe;
 import controleur.EcouteurTicTacToe;
 import observer.Observable;
+import observer.Observateur;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class PanneauTicTacToe extends JPanel {
+public class PanneauTicTacToe extends JPanel implements Observateur {
     private JButton[][] boutons = new JButton[3][3];
     private EtatPartieTicTacToe partie;
     private ActionListener ecouteurTicTacToe;
@@ -28,7 +29,8 @@ public class PanneauTicTacToe extends JPanel {
                     boutons[i][j].setIcon(ServiceImages.getIconePourSymbole(etatPlateau[i][j]));
             }
         //Connecter l'observateur sur l'observable :
-        //partie.ajouterObservateur(this);
+        this.partie.ajouterObservateur(this);
+
     }
     public void setEcouteurTicTacToe(ActionListener ecouteurTicTacToe) {
         this.ecouteurTicTacToe = ecouteurTicTacToe;
@@ -36,4 +38,21 @@ public class PanneauTicTacToe extends JPanel {
             for (int j=0;j<boutons[i].length;j++)
                 boutons[i][j].addActionListener(ecouteurTicTacToe);
     }
+    @Override
+    public void seMettreAJour(Observable observable) {
+        char[][] plateau = partie.getEtatPlateau();
+
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                char coup = plateau[i][j];
+                if (coup == 'X' || coup == 'O') {
+                    boutons[i][j].setIcon(ServiceImages.getIconePourSymbole(coup));
+                } else {
+                    boutons[i][j].setIcon(null);
+                }
+            }
+        }
+        this.repaint();
+    }
+
 }
