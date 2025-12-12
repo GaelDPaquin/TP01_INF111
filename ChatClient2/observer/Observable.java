@@ -22,8 +22,8 @@ public class Observable {
 			this.observateurs.add(observateur);
 			ajoutEffectue = true;
 		}
-//		if (ajoutEffectue)
-//			observateur.seMettreAJour(this);
+		//if (ajoutEffectue)
+		//	observateur.seMettreAJour(this);
 		return ajoutEffectue;
 	  }
 		
