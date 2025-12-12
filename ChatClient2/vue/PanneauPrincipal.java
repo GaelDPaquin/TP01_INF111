@@ -37,6 +37,7 @@ public class PanneauPrincipal  extends JPanel {
 
         panneauInvitations = new PanneauInvitations();
 
+
         panneauxPrives = new HashMap<>();
 
         connectes = new DefaultListModel<>();
