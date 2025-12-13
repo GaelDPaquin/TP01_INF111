@@ -16,24 +16,24 @@ public class EtatPartieTicTacToe extends Observable {
     public boolean coup(String strCoup) {
         boolean res = false;
         String[] t = strCoup.split(" ");
-        if (t.length < 3)
-            return res;
-        if (!t[0].equalsIgnoreCase("X") || t[0].equalsIgnoreCase("O"))
-            return res;
-        try {
-            int i = Integer.parseInt(t[1]);
-            int j = Integer.parseInt(t[2]);
-            if (etatPlateau[i][j] !=' ')
-                return res;
-            etatPlateau[i][j] = t[0].charAt(0);
-            notifierObservateurs();
-            return true;
+        int ligne, colonne;
 
-        }
-        catch (Exception exc) {
-            System.out.println("Mauvaise saisie");
-        }
-        return res;
+        if (t.length != 3)
+            return res;
+
+        ligne = Integer.parseInt(t[1]);
+        colonne = Integer.parseInt(t[2]);
+
+        if (ligne > 2 || colonne > 2 || ligne < 0 || colonne < 0)
+            return res;
+
+        if (etatPlateau[ligne][colonne] != '.')
+            return res;
+
+        etatPlateau[ligne][colonne] = t[0].charAt(0);
+        notifierObservateurs();
+
+        return res=true;
     }
 
     @Override

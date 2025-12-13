@@ -40,14 +40,15 @@ public class PanneauTicTacToe extends JPanel implements Observateur {
     }
     @Override
     public void seMettreAJour(Observable observable) {
-        char[][] plateau = partie.getEtatPlateau();
 
+        char[][] plateau = partie.getEtatPlateau();
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 char coup = plateau[i][j];
-                if (coup == 'X' || coup == 'O') {
+                if (coup != '.') {
                     boutons[i][j].setIcon(ServiceImages.getIconePourSymbole(coup));
-                } else {
+                }
+                else{
                     boutons[i][j].setIcon(null);
                 }
             }
