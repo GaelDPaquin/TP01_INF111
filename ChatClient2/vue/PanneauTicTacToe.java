@@ -29,7 +29,7 @@ public class PanneauTicTacToe extends JPanel implements Observateur {
                     boutons[i][j].setIcon(ServiceImages.getIconePourSymbole(etatPlateau[i][j]));
             }
         //Connecter l'observateur sur l'observable :
-        this.partie.ajouterObservateur(this);
+        partie.ajouterObservateur(this);
 
     }
     public void setEcouteurTicTacToe(ActionListener ecouteurTicTacToe) {
@@ -40,7 +40,6 @@ public class PanneauTicTacToe extends JPanel implements Observateur {
     }
     @Override
     public void seMettreAJour(Observable observable) {
-
         char[][] plateau = partie.getEtatPlateau();
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
@@ -55,5 +54,4 @@ public class PanneauTicTacToe extends JPanel implements Observateur {
         }
         this.repaint();
     }
-
 }

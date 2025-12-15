@@ -5,6 +5,7 @@ import com.chat.commun.evenement.GestionnaireEvenement;
 import com.chat.commun.net.Connexion;
 import com.chat.tictactoe.EtatPartieTicTacToe;
 import com.chat.programme.MainFrame;
+import controleur.EcouteurTicTacToe;
 import vue.FenetreTicTacToe;
 import vue.PanneauPrincipal;
 import vue.PanneauTicTacToe;
@@ -151,7 +152,11 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     System.out.println("Partie d'échecs démarrée avec "+arg+". Votre couleur est : "+str);
                     System.out.println(client.getEtatPartieTicTacToe());
                     PanneauTicTacToe panneauTicTacToe = new PanneauTicTacToe(client.getEtatPartieTicTacToe());
-                    //à compléter
+                    panneauTicTacToe.putClientProperty("symbole", str);
+                    EcouteurTicTacToe ecouter = new EcouteurTicTacToe(client);
+                    panneauTicTacToe.setEcouteurTicTacToe(ecouter);
+                    fenetreTicTacToe = new FenetreTicTacToe(panneauTicTacToe, "Vous ("  + ") contre " );
+                    fenetreTicTacToe.setVisible(true);
 
                     panneauPrincipal.setFenetreTicTacToe(arg,fenetreTicTacToe);
                     break;

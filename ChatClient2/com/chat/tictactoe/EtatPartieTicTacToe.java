@@ -15,9 +15,8 @@ public class EtatPartieTicTacToe extends Observable {
     }
     public boolean coup(String strCoup) {
         boolean res = false;
-        String[] t = strCoup.split(" ");
         int ligne, colonne;
-
+        String[] t = strCoup.split(" ");
         if (t.length != 3)
             return res;
 
@@ -32,8 +31,9 @@ public class EtatPartieTicTacToe extends Observable {
 
         etatPlateau[ligne][colonne] = t[0].charAt(0);
         notifierObservateurs();
+        res = true;
+        return res;
 
-        return res=true;
     }
 
     @Override
