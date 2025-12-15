@@ -41,13 +41,19 @@ public class PanneauTicTacToe extends JPanel implements Observateur {
     @Override
     public void seMettreAJour(Observable observable) {
         char[][] plateau = partie.getEtatPlateau();
+        Font police = new Font("Arial",Font.BOLD,48);
         for (int i = 0; i < 3; i++){
             for (int j = 0; j < 3; j++){
                 char coup = plateau[i][j];
-                if (coup != '.') {
-                    boutons[i][j].setIcon(ServiceImages.getIconePourSymbole(coup));
-                }
-                else{
+                if (coup == 'X') {
+                    boutons[i][j].setText("X");
+                    boutons[i][j].setFont(police);
+                    boutons[i][j].setEnabled(false);
+                } else if (coup == 'O') {
+                    boutons[i][j].setText("O");
+                    boutons[i][j].setFont(police);
+                    boutons[i][j].setEnabled(false);
+                } else{
                     boutons[i][j].setIcon(null);
                 }
             }

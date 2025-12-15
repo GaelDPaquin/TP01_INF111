@@ -155,7 +155,7 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     panneauTicTacToe.putClientProperty("symbole", str);
                     EcouteurTicTacToe ecouter = new EcouteurTicTacToe(client);
                     panneauTicTacToe.setEcouteurTicTacToe(ecouter);
-                    fenetreTicTacToe = new FenetreTicTacToe(panneauTicTacToe, "Vous ("  + ") contre " );
+                    fenetreTicTacToe = new FenetreTicTacToe(panneauTicTacToe, "Vous (" + str + ") contre " + arg);
                     fenetreTicTacToe.setVisible(true);
 
                     panneauPrincipal.setFenetreTicTacToe(arg,fenetreTicTacToe);
